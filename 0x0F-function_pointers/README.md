@@ -1,63 +1,111 @@
-C - Variadic functions 📁
-TASKS 📃
-0. Beauty is variable, ugliness is constant
-Write a function that returns the sum of all its parameters.
+C - Function pointers
+TASKS
+0. What's my name
+Write a function that prints a name.
 
-Prototype: int sum_them_all(const unsigned int n, ...);
+Prototype: void print_name(char *name, void (*f)(char *));
 
-If n == 0, return 0
+1. If you spend too much time thinking about a thing, you'll never get it done
+Write a function that executes a function given as a parameter on each element of an array.
 
-1. To be is to be the value of a variable
-Write a function that prints numbers, followed by a new line.
+Prototype: void array_iterator(int *array, size_t size, void (*action)(int));
 
-Prototype: void print_numbers(const char *separator, const unsigned int n, ...);
+where size is the size of the array and action is a pointer to the function you need to use.
 
-where separator is the string to be printed between numbers and n is the number of integers passed to the function
+2. To hell with circumstances; I create opportunities
+Write a function that searches for an integer.
 
-You are allowed to use printf
+Prototype: int int_index(int *array, int size, int (*cmp)(int));
 
-If separator is NULL, don’t print it
+where size is the number of elements in the array array
 
-Print a new line at the end of your function
+cmp is a pointer to the function to be used to compare values
 
-2. One woman's constant is another woman's variable
-Write a function that prints strings, followed by a new line.
+int_index returns the index of the first element for which the cmp function does not return 0
 
-Prototype: void print_strings(const char *separator, const unsigned int n, ...);
+If no element matches, return -1
 
-where separator is the string to be printed between the strings and n is the number of strings passed to the function
+If size <= 0, return -1
 
-You are allowed to use printf
+3. A goal is not always meant to be reached, it often serves simply as something to aim at
+Write a program that performs simple operations.
 
-If separator is NULL, don’t print it
+You are allowed to use the standard library
 
-If one of the string is NULL, print (nil) instead
+Usage: calc num1 operator num2
 
-Print a new line at the end of your function
+You can assume num1 and num2 are integers, so use the atoi function to convert them from the string input to int
 
-3. To be is a to be the value of a variable
-Write a function that prints anything.
+operator is one of the following:
 
-Prototype: void print_all(const char * const format, ...);
++: addition
+-: subtraction
+*: multiplication
+/: division
+%: modulo
+The program prints the result of the operation, followed by a new line
 
-where format is a list of types of arguments passed to the function
+You can assume that the result of all operations can be stored in an int
 
-c: char
-i: integer
-f: float
-s: char * (if the string is NULL, print (nil) instead
-any other char should be ignored
+if the number of arguments is wrong, print Error, followed by a new line, and exit with the status 98
+
+if the operator is none of the above, print Error, followed by a new line, and exit with the status 99
+
+if the user tries to divide (/ or %) by 0, print Error, followed by a new line, and exit with the status 100
+
+This task requires that you create four different files.
+
+3-calc.h
+This file should contain all the function prototypes and data structures used by the program. You can use this structure:
+3-op_functions.c
+This file should contain the 5 following functions (not more):
+
+op_add: returns the sum of a and b. Prototype: int op_add(int a, int b);
+op_sub: returns the difference of a and b. Prototype: int op_sub(int a, int b);
+op_mul: returns the product of a and b. Prototype: int op_mul(int a, int b);
+op_div: returns the result of the division of a by b. Prototype: int op_div(int a, int b);
+op_mod: returns the remainder of the division of a by b. Prototype: int op_mod(int a, int b);
+3-get_op_func.c
+This file should contain the function that selects the correct function to perform the operation asked by the user. You’re not allowed to declare any other function.
+
+Prototype: int (*get_op_func(char *s))(int, int);
+where s is the operator passed as argument to the program
+This function returns a pointer to the function that corresponds to the operator given as a parameter. Example: get_op_func("+") should return a pointer to the function op_add
+You are not allowed to use switch statements
+You are not allowed to use for or do ... while loops
+You are not allowed to use goto
+You are not allowed to use else
+You are not allowed to use more than one if statement in your code
+You are not allowed to use more than one while loop in your code
+If s does not match any of the 5 expected operators (+, -, *, /, %), return NULL
+You are only allowed to declare these two variables in this function:
+3-main.c
+This file should contain your main function only.
+
+You are not allowed to code any other function than main in this file
+You are not allowed to directly call op_add, op_sub, op_mul, op_div or op_mod from the main function
+You have to use atoi to convert arguments to int
+You are not allowed to use any kind of loop -
+You are allowed to use a maximum of 3 if statements
+4. Most hackers are young because young people tend to be adaptable. As long as you remain adaptable, you can always be a good hacker
+Write a program that prints the opcodes of its own main function.
+
+Usage: ./main number_of_bytes
+
+Output format:
+
+the opcodes should be printed in hexadecimal, lowercase
+each opcode is two char long
+listing ends with a new line
 see example
-You are not allowed to use for, goto, ternary operator, else, do ... while
+You are allowed to use printf and atoi
 
-You can use a maximum of
+You have to use atoi to convert the argument to an int
 
-2 while loops
-2 if
-You can declare a maximum of 9 variables
+If the number of argument is not the correct one, print Error, followed by a new line, and exit with the status 1
 
-You are allowed to use printf
+If the number of bytes is negative, print Error, followed by a new line, and exit with the status 2
 
-Print a new line at the end of your function
+You do not have to compile with any flags
 
 
